@@ -1,0 +1,1 @@
+* Simple Reddit App in Rails
