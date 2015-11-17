@@ -1,10 +1,28 @@
 <% @links.each do |link| %>
   <div class="link row clearfix">
-    <h2 class="text-center">
+    <h2 class="">
       <%= link_to link.title, link %> <br/>
       <small class="author">
         Submitted <%= time_ago_in_words(link.created_at) %> by <%= link.user.email %>
       </small>
     </h2>
+		<div class="btn-group">
+			<!-- can't use link_to, because it will stringify, just use raw <a> & put URL -->
+			<a href="<%= link.url %>" class="btn btn-default btn-sn">
+				<span class="glyphicon glyphicon-globe"></span>
+				Visit link
+			</a> 
+			
+			<%= link_to like_link_path(link), method: :put, class: "btn btn-default btn-sn" do%>
+				<span class="glyphicon glyphicon-chevron-up"></span>
+				Upvote <%= link.get_upvotes.size %>
+			<% end %>
+
+			<%= link_to dislike_link_path(link), method: :put, class: "btn btn-default btn-sn" do%>
+				<span class="glyphicon glyphicon-chevron-down"></span>
+				Downvote <%= link.get_downvotes.size %>
+			<% end %>
+
+		</div>
   </div>
 <% end %> 
