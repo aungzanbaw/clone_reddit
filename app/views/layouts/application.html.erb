@@ -7,24 +7,47 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+	
+	<header class="navbar navbar-default" id="top" role="banner">
+  	<div class="container">
+	    <div class="navbar-header">
+	      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <%= link_to "raddit", root_path, class: "navbar-brand" %>
+	    </div>
+	    <nav id="bs-navbar" class="collapse navbar-collapse">
+				<% if user_signed_in? %>
+					<ul class="nav navbar-nav">
+						<li><%= link_to "Submit link", new_link_path %></li>
+						<li><%= link_to "Account", edit_user_registration_path %></li>
+						<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+					</ul> 
+				<% else %>
+					<ul class="nav navbar-nav navbar-right">
+						<li><%= link_to 'Sign up', new_user_registration_path %></li>
+						<li><%= link_to 'Sign in', new_user_session_path %></li>
+					</ul>
+				<% end %>	 
+	    </nav>
+  	</div>
+	</header>
+	
+	
 
-	<% flash.each do |name,msg| %>
-		<%= content_tag :div,msg, class: "alert alert-#{name}"  %>
-	<% end %>
+	<div id="main" class="container">
+		
+		<% flash.each do |name,msg| %>
+			<%= content_tag :div,msg, class: "alert alert-#{name}"  %>
+		<% end %>
 
-	<% if user_signed_in? %>
-		<ul>
-			<li><%= link_to "Submit link", new_link_path %></li>
-			<li><%= link_to "Account", edit_user_registration_path %></li>
-			<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-		</ul>Dash​Doc
-	<% else %>
-		<ul>
-			<li><%= link_to 'Sign up', new_user_registration_path %></li>
-			<li><%= link_to 'Sign in', new_user_session_path %></li>
-		</ul>
-	<% end %>
+		<div id="container" class="col-ml-9 center-block">
+			<%= yield %>
+		</div>
 
-	<%= yield %>
+	</div>	
 </body>
 </html>
